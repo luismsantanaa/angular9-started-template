@@ -1,0 +1,68 @@
+<mat-toolbar color="primary">
+
+    <mat-toolbar-row>
+        <button mat-icon-button (click)="toggleSidenav.emit()">
+            <mat-icon>menu</mat-icon>
+        </button>
+
+        <span class="lspacer"></span>
+
+        <div fxFlex fxLayout="row" fxLayoutAlign="end end" class="mt-4">
+            <ul id="horizontal-list">
+                <li>
+                    <button mat-button [matMenuTriggerFor]="alertMenu">
+                        <mat-icon>notifications</mat-icon>
+                    </button>
+                    <mat-menu #alertMenu="matMenu" class="animated fadeInDown">
+                        <button mat-menu-item>
+                            <mat-icon>notification_important</mat-icon>
+                            15 Notificaciones
+                        </button>
+                        <mat-divider></mat-divider>
+                        <button mat-menu-item>
+                            <mat-icon>email</mat-icon>
+                            4 nuevos mensajes
+                        </button>
+                        <mat-divider></mat-divider>
+                        <button mat-menu-item>
+                            <mat-icon>donut_small</mat-icon>
+                            3 nuevos reportes
+                        </button>
+                    </mat-menu>
+                </li>
+                <li>
+                    <button mat-button [matMenuTriggerFor]="theme">
+                        <mat-icon>settings</mat-icon>
+                      </button>
+                    <mat-menu #theme="matMenu" class="animated fadeIn">
+                        <button mat-menu-item (click)="toggleTheme.emit()">
+                            <mat-icon>palette</mat-icon>
+                            Cambiar Tema
+                        </button>
+                    </mat-menu>
+                </li>
+                <button mat-button [matMenuTriggerFor]="usrMenu">
+                    <mat-icon>person_outline</mat-icon>
+            </button>
+                <li>
+                    <mat-menu #usrMenu="matMenu" class="animated fadeInRight">
+                        <div class="text-center mb-1">
+                            <img src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50.jpg" class="rounded-circle" height="50" width="50" alt="foto usuario" />
+                        </div>
+                        <mat-divider></mat-divider>
+                        <button mat-menu-item>
+                            <mat-icon>portrait</mat-icon>
+                            Perfil
+                        </button>
+                        <button mat-menu-item (click)="logout()">
+                    <mat-icon>exit_to_app</mat-icon>
+                        Sign out
+               </button>
+
+                    </mat-menu>
+                </li>
+            </ul>
+        </div>
+    </mat-toolbar-row>
+
+</mat-toolbar>

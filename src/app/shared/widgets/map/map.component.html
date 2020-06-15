@@ -1,0 +1,17 @@
+<mat-card>
+    <mat-card-title> Ubicación de Clientes </mat-card-title>
+    <mat-card-subtitle>
+        Precisión:
+        <span *ngIf="accurracy < 50" class="badge badge-success"> {{accurracy}} Mt.</span>
+        <span *ngIf="accurracy >=50 && accurracy < 100" class="badge badge-warning"> {{accurracy}} Mt.</span>
+        <span *ngIf="accurracy >= 100" class="badge badge-danger"> {{accurracy}} Mt.</span>
+    </mat-card-subtitle>
+    <mat-card-content>
+        <google-map [height]="hight" [width]="width" [zoom]="zoom" [center]="center" [options]="options">
+            <map-circle [options]="circle"></map-circle>
+            <map-marker #markerElem *ngFor="let marker of markers" [position]="marker.position" [label]="marker.label" [title]="marker.title" [options]="marker.options" (mapClick)="openInfo(markerElem, marker.info)">
+            </map-marker>
+            <map-info-window>{{ infoContent }}</map-info-window>
+        </google-map>
+    </mat-card-content>
+</mat-card>

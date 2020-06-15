@@ -1,0 +1,68 @@
+<div class="container-fluid">
+    <h2 mat-dialog-title class="text-primary">
+        {{title}}</h2>
+
+    <mat-dialog-content [formGroup]="usrForm" class="normal-form">
+        <div class="row">
+            <div class="col-6">
+                <!-- <input type="hidden" formControlName="$key"> -->
+                <mat-form-field>
+                    <input formControlName="name" matInput placeholder="Nombres">
+                    <mat-error>El valor Nombre es requerido!!</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input formControlName="lastName" matInput placeholder="Apellidos">
+                    <mat-error>El valor Apellido es requerido!!</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input formControlName="userName" matInput placeholder="Usuario">
+                    <mat-error>El valor Usuario es requerido!!</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input formControlName="jobTitle" matInput placeholder="Posición">
+                    <mat-error>El valor Posición es requerido!!</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-select formControlName="role" placeholder="Rol">
+                        <mat-option>-- seleccione --</mat-option>
+                        <ng-container *ngFor="let mRol of roles">
+                            <mat-option value="{{mRol.id}}">{{mRol.value}}</mat-option>
+                        </ng-container>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-6">
+                <mat-form-field>
+                    <input formControlName="password" type="password" matInput placeholder="Contraseña">
+                    <mat-error>La Contraseña es requerida!!</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input formControlName="password2" type="password" matInput placeholder="Repetir Contraseña">
+                    <mat-error>Repetir la Contraseña es requerido!!</mat-error>
+                </mat-form-field>
+                <div class="add-bottom-padding">
+                    <mat-checkbox formControlName="blocked" color="primary">
+                        Bloqueado
+                    </mat-checkbox>
+                </div>
+                <div class="add-bottom-padding">
+                    <mat-checkbox formControlName="active" color="primary">
+                        Activo
+                    </mat-checkbox>
+                </div>
+                <mat-card-content>
+                    <div class="row" style="text-align: center;">
+                        <img src="http://localhost:3000/public/users/no-image.png" alt="Avatar Usuario" width="75px" height="75px" class="img-circle">
+                    </div>
+                    <div class="row mt-3">
+                    </div>
+                </mat-card-content>
+            </div>
+        </div>
+        <mat-divider></mat-divider>
+        <mat-dialog-actions class="float-right">
+            <button mat-raised-button color="warn" (click)='close()'>Cancelar</button>
+            <button mat-raised-button color="primary" type="submit">Submit</button>
+        </mat-dialog-actions>
+    </mat-dialog-content>
+</div>

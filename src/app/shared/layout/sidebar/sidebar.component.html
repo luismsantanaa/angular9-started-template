@@ -1,0 +1,69 @@
+<mat-sidenav-container class="app-sidenav-container menuItem" [class.dark-theme]="isDarkTheme" [dir]="dir">
+    <mat-sidenav #sidenav class="app-sidenav mat-elevation-z10" [opened]="!isScreenSmall()" [mode]="isScreenSmall() ? 'over' : 'side'">
+        <mat-toolbar color="primary">
+            <span class="mr-2">
+                <img src="../../../../assets/img/satelite.png" height="70px" width="80px" alt="logo" />
+            </span> App Name
+        </mat-toolbar>
+
+        <mat-nav-list>
+            <div class="profile-card">
+                <div class="header">
+                    <h3>{{fullName}}</h3>
+                    <h6>{{job}}</h6>
+                </div>
+                <img [src]="avatar" alt="foto usuario">
+            </div>
+
+            <mat-divider></mat-divider>
+            <mat-divider></mat-divider>
+
+            <a mat-list-item routerLinkActive="active" routerLink="/dashboard" class="map-nav-list">
+                <mat-icon>dashboard</mat-icon>
+                Dashboard
+            </a>
+
+            <mat-divider></mat-divider>
+
+            <mat-accordion>
+                <mat-expansion-panel class="mat-accordion">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <h2 matSubheader style="color: cornsilk;">Pages</h2>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <a mat-list-item href="#" class="map-nav-list">Books</a>
+                    <a mat-list-item href="#" class="map-nav-list">Posts</a>
+                    <a mat-list-item href="#" class="map-nav-list">Articles</a>
+                </mat-expansion-panel>
+            </mat-accordion>
+
+
+
+            <mat-divider></mat-divider>
+
+            <h2 matSubheader style="color: cornsilk;">Tools</h2>
+
+            <a mat-list-item routerLinkActive="active" routerLink="/users" class="map-nav-list">
+                <mat-icon>people</mat-icon>
+                Usuarios
+            </a>
+
+            <a mat-list-item routerLinkActive="list-item-active" routerLink="/contacts" class="map-nav-list">
+                <mat-icon>verified_user</mat-icon>
+                Permisos
+            </a>
+        </mat-nav-list>
+
+    </mat-sidenav>
+
+    <div class="app-sidenav-content">
+        <app-header (toggleTheme)="toggleTheme()" (toggleSidenav)="sidenav.toggle()" (toggleDir)="toggleDir()">
+        </app-header>
+        <div class="myContainer container-fluid">
+            <app-breadcrumbs></app-breadcrumbs>
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+
+</mat-sidenav-container>
