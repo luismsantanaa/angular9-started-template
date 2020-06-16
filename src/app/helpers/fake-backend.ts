@@ -28,9 +28,10 @@ const users: UserModel[] = [
     jobTitle: 'Adminitrator',
     createBy: 'lsantana',
     crateDate: new Date('2020-05-23T21:05:39.401Z'),
-    img: 'https://gravatar.com/avatar/d861875b248e885977c1d0b41e1e7b6c?s=200&d=robohash&r=x',
+    img:
+      'https://gravatar.com/avatar/d861875b248e885977c1d0b41e1e7b6c?s=200&d=robohash&r=x',
     token: '',
-    fullName: ''
+    fullName: '',
   },
   {
     _id: '5ec990238cbca64d8c273164',
@@ -46,12 +47,13 @@ const users: UserModel[] = [
     jobTitle: 'Vice-Presidente',
     createBy: 'lsantana',
     crateDate: new Date('2020-05-23T21:05:39.401Z'),
-    img: 'https://robohash.org/d861875b248e885977c1d0b41e1e7b6c?set=set3&bgset=bg2&size=200x200',
+    img:
+      'https://robohash.org/d861875b248e885977c1d0b41e1e7b6c?set=set3&bgset=bg2&size=200x200',
     token: '',
-    fullName: ''
+    fullName: '',
   },
   {
-  _id: '5ec990238cbca64d8c273164',
+    _id: '5ec990238cbca64d8c273164',
     role: Roles.Unassigned,
     blocked: false,
     updateBy: null,
@@ -64,10 +66,11 @@ const users: UserModel[] = [
     jobTitle: 'Heredera VIP',
     createBy: 'lsantana',
     crateDate: new Date('2020-05-23T21:05:39.401Z'),
-    img: 'https://robohash.org/d861875b248e885977c1d0b41e1e7b6c?set=set4&bgset=&size=200x200',
+    img:
+      'https://robohash.org/d861875b248e885977c1d0b41e1e7b6c?set=set4&bgset=&size=200x200',
     token: '',
-    fullName: ''
-  }
+    fullName: '',
+  },
 ];
 
 @Injectable()
@@ -91,6 +94,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
           return authenticate();
         case url.endsWith('/users') && method === 'GET':
           return getUsers();
+        case url.endsWith('/users') && method === 'POST':
+          return addUser();
         case url.match(/\/users\/\d+$/) && method === 'GET':
           return getUserById();
         default:
@@ -106,7 +111,9 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       const user = users.find(
         (x) => x.userName === userName && x.password === password
       );
-      if (!user) { return error('Username or password is incorrect'); }
+      if (!user) {
+        return error('Username or password is incorrect');
+      }
       return ok({
         _id: user._id,
         userName: user.userName,
@@ -121,17 +128,41 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     }
 
     function getUsers() {
-      if (!isAdmin()) { return unauthorized(); }
+      if (!isAdmin()) {
+        return unauthorized();
+      }
       return ok(users);
     }
 
     function getUserById() {
-      if (!isLoggedIn()) { return unauthorized(); }
+      if (!isLoggedIn()) {
+        return unauthorized();
+      }
 
       // only admins can access other user records
-      if (!isAdmin() && currentUser()._id !== idFromUrl()) { return unauthorized(); }
+      if (!isAdmin() && currentUser()._id !== idFromUrl()) {
+        return unauthorized();
+      }
 
       const user = users.find((x) => x._id === idFromUrl());
+      return ok(user);
+    }
+
+    function addUser() {
+      const user = new UserModel({
+        _id: body.$key,
+        name: body.name,
+        lastName: body.lastName,
+        userName: body.userName,
+        jobTitle: body.jobTitle,
+        role: body.role,
+        img: body.img,
+        password: body.password,
+        blocked: body.blocked,
+        active: body.active,
+      });
+      //
+      users.push(user);
       return ok(user);
     }
 
@@ -159,7 +190,9 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     }
 
     function currentUser() {
-      if (!isLoggedIn()) { return; }
+      if (!isLoggedIn()) {
+        return;
+      }
       const id = headers.get('Authorization').split('.')[1];
       return users.find((x) => x._id === id);
     }
